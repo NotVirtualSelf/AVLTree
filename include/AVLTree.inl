@@ -318,7 +318,7 @@ int AVLTree<T, Compare, Allocator>::rankRec(Node* node, const T& value) const {
         int rightRank = rankRec(node->right, value);
         return leftSize + 1 + rightRank;
     } else {
-        return getSize(node->left) + 1;
+        return getSize(node->left);
     }
 }
 
