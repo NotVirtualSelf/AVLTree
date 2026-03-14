@@ -325,13 +325,13 @@ int AVLTree<T, Compare, Allocator>::rankRec(Node* node, const T& value) const {
 // ==================== 第k小 ====================
 template <typename T, typename Compare, typename Allocator>
 T& AVLTree<T, Compare, Allocator>::kth(int k) {
-    if (k < 1 || k > size()) throw std::out_of_range("kth index out of range");
+    if (k < 0 || k >= size()) throw std::out_of_range("kth index out of range");
     return kthRec(root, k)->data;
 }
 
 template <typename T, typename Compare, typename Allocator>
 const T& AVLTree<T, Compare, Allocator>::kth(int k) const {
-    if (k < 1 || k > size()) throw std::out_of_range("kth index out of range");
+    if (k < 0 || k >= size()) throw std::out_of_range("kth index out of range");
     return kthRec(root, k)->data;
 }
 
@@ -339,9 +339,9 @@ template <typename T, typename Compare, typename Allocator>
 typename AVLTree<T, Compare, Allocator>::Node*
 AVLTree<T, Compare, Allocator>::kthRec(Node* node, int k) const {
     int leftSize = getSize(node->left);
-    if (k <= leftSize)
+    if (k < leftSize)
         return kthRec(node->left, k);
-    else if (k == leftSize + 1)
+    else if (k == leftSize)
         return node;
     else
         return kthRec(node->right, k - leftSize - 1);
